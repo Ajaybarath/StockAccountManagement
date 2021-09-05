@@ -37,4 +37,11 @@ public class Stock {
 		return price;
 	}
 
+	@Override
+	public String toString() {
+		return "Stock [name=" + name + ", noOfShares=" + noOfShares + ", price=" + price + "]";
+	}
+	
+	
+
 }
