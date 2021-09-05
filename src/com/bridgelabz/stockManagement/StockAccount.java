@@ -1,12 +1,23 @@
 package com.bridgelabz.stockManagement;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
+
+import com.bridgeLabz.linkedList.MyLinkedList;
+import com.bridgeLabz.linkedList.MyNode;
+import com.bridgeLabz.queue.MyQueue;
 
 public class StockAccount {
 	
 	Map<String, Stock> stockList;
 	
+	MyQueue<String> txnDateTime;
+	
+	StockAccount() {
+		stockList = new HashMap<>();
+		txnDateTime = new MyQueue<>();
+	}
 	
 	private int calculatePrice(Stock stock) {
 		return stock.getPrice() * stock.getNoOfShares();
@@ -29,6 +40,7 @@ public class StockAccount {
 			shareCount += amount;
 			stock.setNoOfShares(shareCount);
 			LocalDateTime dateTime = LocalDateTime.now();
+			txnDateTime.add(new MyNode<String>("BUY " + dateTime));
 			stock.setTransaction("BUY " + dateTime);
 			stockList.put(symbol, stock);
 		}
@@ -44,7 +56,8 @@ public class StockAccount {
 				shareCount -= amount;
 				stock.setNoOfShares(shareCount);
 				LocalDateTime dateTime = LocalDateTime.now();
-				stock.setTransaction("BUY " + dateTime);
+				txnDateTime.add(new MyNode<String>("SELL " + dateTime));
+				stock.setTransaction("SELL " + dateTime);
 				stockList.put(symbol, stock);
 			}
 			else {
