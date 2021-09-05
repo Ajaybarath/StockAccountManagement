@@ -1,5 +1,6 @@
 package com.bridgelabz.stockManagement;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class StockAccount {
@@ -27,6 +28,8 @@ public class StockAccount {
 			int shareCount = stock.getNoOfShares();
 			shareCount += amount;
 			stock.setNoOfShares(shareCount);
+			LocalDateTime dateTime = LocalDateTime.now();
+			stock.setTransaction("BUY " + dateTime);
 			stockList.put(symbol, stock);
 		}
 
@@ -40,6 +43,8 @@ public class StockAccount {
 			if (shareCount >= amount) {
 				shareCount -= amount;
 				stock.setNoOfShares(shareCount);
+				LocalDateTime dateTime = LocalDateTime.now();
+				stock.setTransaction("BUY " + dateTime);
 				stockList.put(symbol, stock);
 			}
 			else {
