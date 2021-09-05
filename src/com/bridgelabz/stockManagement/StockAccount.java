@@ -40,7 +40,7 @@ public class StockAccount {
 			shareCount += amount;
 			stock.setNoOfShares(shareCount);
 			LocalDateTime dateTime = LocalDateTime.now();
-			txnDateTime.add(new MyNode<String>("BUY " + dateTime));
+			txnDateTime.add(new MyNode<String>("BUY " + symbol + " "  + dateTime));
 			stock.setTransaction("BUY " + dateTime);
 			stockList.put(symbol, stock);
 		}
@@ -57,7 +57,7 @@ public class StockAccount {
 				stock.setNoOfShares(shareCount);
 				LocalDateTime dateTime = LocalDateTime.now();
 				txnDateTime.add(new MyNode<String>("SELL " + dateTime));
-				stock.setTransaction("SELL " + dateTime);
+				stock.setTransaction("SELL " + symbol + " " + dateTime);
 				stockList.put(symbol, stock);
 			}
 			else {
