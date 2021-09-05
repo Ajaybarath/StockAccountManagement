@@ -58,7 +58,15 @@ public class StockAccount {
 	}
 	
 	void printReport() {
-		
+		System.out.println(toString());
 	}
+
+	@Override
+	public String toString() {
+		return "StockAccount [stockList=" + stockList + "]";
+	}
+	
+	
+	
 
 }
