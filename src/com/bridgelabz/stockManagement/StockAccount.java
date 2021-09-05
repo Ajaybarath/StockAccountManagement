@@ -7,32 +7,34 @@ import java.util.Map;
 import com.bridgeLabz.linkedList.MyLinkedList;
 import com.bridgeLabz.linkedList.MyNode;
 import com.bridgeLabz.queue.MyQueue;
+import com.bridgeLabz.stacks.MyStack;
 
 public class StockAccount {
-	
+
 	Map<String, Stock> stockList;
-	
+
 	MyQueue<String> txnDateTime;
-	
+	MyStack<String> stockTxnList;
+
 	StockAccount() {
 		stockList = new HashMap<>();
 		txnDateTime = new MyQueue<>();
+		stockTxnList = new MyStack<>();
 	}
-	
+
 	private int calculatePrice(Stock stock) {
 		return stock.getPrice() * stock.getNoOfShares();
 	}
-	
+
 	private double valueOf() {
 		double totalValue = 0;
-		for (Stock stock: stockList.values()) {
+		for (Stock stock : stockList.values()) {
 			totalValue += calculatePrice(stock);
 		}
-		
+
 		return totalValue;
 	}
 
-	
 	void buy(int amount, String symbol) {
 		if (stockList.containsKey(symbol)) {
 			Stock stock = stockList.get(symbol);
@@ -40,14 +42,15 @@ public class StockAccount {
 			shareCount += amount;
 			stock.setNoOfShares(shareCount);
 			LocalDateTime dateTime = LocalDateTime.now();
-			txnDateTime.add(new MyNode<String>("BUY " + symbol + " "  + dateTime));
+			txnDateTime.add(new MyNode<String>("BUY " + symbol + " " + dateTime));
+			stockTxnList.push(new MyNode<String>("BUY" + symbol));
 			stock.setTransaction("BUY " + dateTime);
 			stockList.put(symbol, stock);
 		}
 
 		System.out.println(amount + symbol + " shares bought ");
 	}
-	
+
 	void sell(int amount, String symbol) {
 		if (stockList.containsKey(symbol)) {
 			Stock stock = stockList.get(symbol);
@@ -56,20 +59,20 @@ public class StockAccount {
 				shareCount -= amount;
 				stock.setNoOfShares(shareCount);
 				LocalDateTime dateTime = LocalDateTime.now();
-				txnDateTime.add(new MyNode<String>("SELL " + dateTime));
-				stock.setTransaction("SELL " + symbol + " " + dateTime);
+				txnDateTime.add(new MyNode<String>("SELL " + symbol + " " + dateTime));
+				stockTxnList.push(new MyNode<String>("SELL " + symbol));
+				stock.setTransaction("SELL " + dateTime);
 				stockList.put(symbol, stock);
-			}
-			else {
+			} else {
 				System.out.println("Not enough shares availaible to sell");
 				return;
 			}
-			
+
 		}
 
 		System.out.println(amount + symbol + " shares sold ");
 	}
-	
+
 	void printReport() {
 		System.out.println(toString());
 	}
@@ -78,8 +81,5 @@ public class StockAccount {
 	public String toString() {
 		return "StockAccount [stockList=" + stockList + "]";
 	}
-	
-	
-	
 
 }
