@@ -21,6 +21,34 @@ public class StockAccount {
 		txnDateTime = new MyQueue<>();
 		stockTxnList = new MyStack<>();
 	}
+	
+	public static void main(String args[]) {
+
+		StockAccount stockAccount = new StockAccount();
+		Stock stock1 = new Stock("idea", 10, 2256);
+		Stock stock2 = new Stock("rel", 33, 1200);
+		Stock stock3 = new Stock("artl", 50, 233);
+		Stock stock4 = new Stock("tata", 20, 323);
+		
+		stockAccount.stockList.put(stock1.getName(), stock1);
+		stockAccount.stockList.put(stock2.getName(), stock2);
+		stockAccount.stockList.put(stock3.getName(), stock3);
+		stockAccount.stockList.put(stock4.getName(), stock4);
+		
+		stockAccount.printReport();
+
+		System.out.println(stockAccount.valueOf());
+
+		stockAccount.buy(5, "idea");
+		stockAccount.buy(10, "artl");
+		stockAccount.sell(5, "tata");
+		
+		stockAccount.printReport();
+
+		System.out.println(stockAccount.valueOf());
+		
+
+	}
 
 	private int calculatePrice(Stock stock) {
 		return stock.getPrice() * stock.getNoOfShares();
